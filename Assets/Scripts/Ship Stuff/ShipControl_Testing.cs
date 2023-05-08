@@ -45,7 +45,7 @@ public class ShipControl_Testing : MonoBehaviour
     public bool kb_pressed = false;
 
     //Object Refs
-    [SerializeField] GameObject controler;
+    //[SerializeField] GameObject controler;
     [SerializeField] GameObject ActiveShip;
     [SerializeField] Slider t;
     [SerializeField] Slider p;
@@ -56,6 +56,8 @@ public class ShipControl_Testing : MonoBehaviour
     [SerializeField] GameObject Gameplay_UI;
     [SerializeField] TextMeshProUGUI velocityTxt;
     [SerializeField] Slider velocity_slider;
+    [SerializeField] GameObject Loss;
+    [SerializeField] public GameObject kinetic_projectile;
 
 
     // Start is called before the first frame update
@@ -90,7 +92,7 @@ public class ShipControl_Testing : MonoBehaviour
         {
             kb_pressed = false;
             kinetic_timer += Time.deltaTime;
-            Debug.Log("Kinetic Timer: " + kinetic_timer);
+            //Debug.Log("Kinetic Timer: " + kinetic_timer);
             kinetic_button.interactable = false;
         }
         Kin_Check();
@@ -101,18 +103,26 @@ public class ShipControl_Testing : MonoBehaviour
     {
         velocity = (rb.velocity.x + rb.velocity.y + rb.velocity.z);
         abs_vel = Math.Abs(velocity);
-        if (abs_vel < max_velocity)
+        if (abs_vel < max_velocity || thrust < 0)
         {
-            rb.AddRelativeForce(transform.forward * thrust);
-            velocityTxt.text = ("Velocity: " + velocity);
+            rb.AddRelativeForce(transform.right * thrust);
+            velocityTxt.text = ("Velocity: " + Math.Round((double)velocity*100,3) + " m/s");
             velocity_slider.value = abs_vel;
         }
         transform.localEulerAngles = transform.localEulerAngles + shipRotation * Time.deltaTime;
     }
 
+    //Damage & Health
     private void OnCollisionEnter(Collision collision)
     {
-        //float damage = collision.
+        Vector3 relVel = collision.relativeVelocity;
+        float dmgMult = relVel.x + relVel.y + relVel.z;
+        float mass = collision.gameObject.GetComponent<Rigidbody>().mass;
+        Damage(dmgMult * mass);
+        if (gameObject.name == "KineticProjectile")
+        {
+            Destroy(collision.gameObject);
+        }
     }
 
     public void Damage(float dmg)
@@ -121,8 +131,9 @@ public class ShipControl_Testing : MonoBehaviour
         if (Health <= 0)
         {
             healthTxt.text = ("Health: 0");
-            Destroy(ActiveShip);
-            return;
+            Time.timeScale = 0f;
+            Loss.SetActive(true);
+            Gameplay_UI.SetActive(false);
         }
         healthTxt.text = ("Health: " + Health);
 
@@ -139,6 +150,9 @@ public class ShipControl_Testing : MonoBehaviour
     public void Kin_b_pressed()
     {
         kb_pressed = true;
+        Vector3 pstn = new Vector3(ActiveShip.transform.position.x, ActiveShip.transform.position.y, ActiveShip.transform.position.z);
+        Instantiate(kinetic_projectile);
+
     }
 
 

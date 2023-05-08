@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5538666792469585546}
   - component: {fileID: 6086539440388618888}
   m_Layer: 0
-  m_Name: Kinetic Projectile
+  m_Name: KineticProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,3 +125,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b4147d3bf5b3747b6cdb66e7798356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shipControl: {fileID: 0}

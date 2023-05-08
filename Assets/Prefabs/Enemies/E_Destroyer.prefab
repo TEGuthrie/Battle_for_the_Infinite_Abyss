@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6782334148230784654}
   - component: {fileID: -189430475196655654}
   - component: {fileID: -6108117743540959271}
+  - component: {fileID: 2494045053984636699}
   m_Layer: 0
   m_Name: E_Destroyer
   m_TagString: Untagged
@@ -131,3 +132,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2494045053984636699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268890464950917192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffe8c650e043ba24d899954dcec17d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
